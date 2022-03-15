@@ -8,7 +8,7 @@ LETTERS = set('qertuiopasdfghjlzxcvbnmàèìòù')
 EXCLUDED = {
     'the', 'that', 'as', 'on', 'provided', 'and', 'redirect', 'solid', 'album', 'this', 'if',
     'are', 'from', 'end', 'can', 'it', 'an', 'not', 'have', 'c', 'b', 'using', 'return', 'm',
-    'other', 'his', 'json', 'index',
+    'other', 'his', 'json', 'index', 'is', 'flags',
 }
 
 def word_yielder(fname: str):    
