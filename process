@@ -6,7 +6,9 @@ LETTERS = set('qertuiopasdfghjlzxcvbnmàèìòù')
 
 # Exclude very common wikipedia foreign words
 EXCLUDED = {
-    'the', 'that', 'as', 'on', 'provided', 'and', 'redirect', 'solid', 'album',
+    'the', 'that', 'as', 'on', 'provided', 'and', 'redirect', 'solid', 'album', 'this', 'if',
+    'are', 'from', 'end', 'can', 'it', 'an', 'not', 'have', 'c', 'b', 'using', 'return', 'm',
+    'other', 'his', 'json', 'index',
 }
 
 def word_yielder(fname: str):    
