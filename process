@@ -1,0 +1,48 @@
+#!/usr/bin/python3
+import sys
+
+# Allowed letters in Sicilian
+LETTERS = set('qertuiopasdfghjlzxcvbnmàèìòù')
+
+# Exclude very common wikipedia foreign words
+EXCLUDED = {
+    'the', 'that', 'as', 'on', 'provided', 'and', 'redirect', 'solid', 'album',
+}
+
+def word_yielder(fname: str):    
+    with open(fname, 'rt') as f:
+        for line in f:
+            for i in line.split(' '):
+                i = i.strip()
+                
+                if len(i) == 0:
+                    continue
+                if set(i).difference(LETTERS):
+                    continue
+                if i in EXCLUDED:
+                    continue
+                
+                yield i
+
+def word_grouper(yielder) -> dict[str, int]:
+    r = {}
+    for i in yielder:
+        if i not in r:
+            r[i] = 0
+        r[i] += 1
+    return r
+
+def group_sorter(d: dict[str, int]):
+    # Put the words and exclude too short and uncommon stuff
+    r = [i for i in d.items() if i[1] >= 4]
+    r.sort(key=lambda i: i[1], reverse=True)
+    return (i[0] for i in r)
+
+def main():
+    words = word_yielder(sys.argv[1])
+    groups = word_grouper(words)
+    for i in group_sorter(groups):
+        print(i)
+
+if __name__ == '__main__':
+    main()
