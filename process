@@ -1,34 +1,24 @@
 #!/usr/bin/python3
 import sys
+import os
 
 # Allowed letters in Sicilian
 LETTERS = set('qertuiopasdfghjlzxcvbnmàèìòù')
 
-# Exclude english crap of which wikipedia seems full
-EXCLUDED = {
-    'as', 'on', 'if', 'it', 'an', 'c', 'b', 'm',
-    'json', 'is',
-}.union(set("qwrtyuiopsdfghjklzxcvbnm"))
+
+def get_exclusions() -> set[str]:
+    '''
+    Load all the exclusion sets
+    '''
+    r = set()
+    for i in os.listdir('exclude'):
+        with open(f'exclude/{i}', 'rt') as f:
+            r = r.union({j.strip() for j in f})
+    return r
 
 
-def load_exclusions() -> None:
-    global EXCLUDED
-
-    murican = set()
-    with open('/usr/share/dict/american-english', 'rt') as f:
-        for i in f:
-            if len(i) >= 4:
-                murican.add(i.strip().lower())
-
-    italian = set()
-    with open('/usr/share/dict/italian', 'rt') as f:
-        for i in f:
-            if len(i) >= 4:
-                italian.add(i.strip().lower())
-    EXCLUDED = EXCLUDED.union(murican.difference(italian))
-
-
-def word_yielder(fname: str):    
+def word_yielder(fname: str):
+    exclusions = get_exclusions()
     with open(fname, 'rt') as f:
         for line in f:
             for i in line.split(' '):
@@ -38,7 +28,7 @@ def word_yielder(fname: str):
                     continue
                 if set(i).difference(LETTERS):
                     continue
-                if i in EXCLUDED:
+                if i in exclusions:
                     continue
                 
                 yield i
@@ -58,7 +48,6 @@ def group_sorter(d: dict[str, int]):
     return (i[0] for i in r)
 
 def main():
-    load_exclusions()
     words = word_yielder(sys.argv[1])
     groups = word_grouper(words)
     for i in group_sorter(groups):
