@@ -6,19 +6,26 @@ import os
 LETTERS = set('qertuiopasdfghjlzxcvbnmàèìòù')
 
 
-def get_exclusions() -> set[str]:
+def get_from_dir(dirname: str) -> set[str]:
     '''
-    Load all the exclusion sets
+    Load all the files in the directory and return a
+    set of all their lines
     '''
     r = set()
-    for i in os.listdir('exclude'):
-        with open(f'exclude/{i}', 'rt') as f:
+    for i in os.listdir(dirname):
+        with open(f'{dirname}/{i}', 'rt') as f:
             r = r.union({j.strip() for j in f})
     return r
 
 
 def word_yielder(fname: str):
-    exclusions = get_exclusions()
+    '''
+    Load the wikipedia dump file, split by
+    word, exclude all words with non-sicilian letters
+
+    then exclude also the words from the exclusion sets
+    '''
+    exclusions = get_from_dir('exclude')
     with open(fname, 'rt') as f:
         for line in f:
             for i in line.split(' '):
@@ -35,6 +42,10 @@ def word_yielder(fname: str):
 
 
 def word_grouper(yielder) -> dict[str, int]:
+    '''
+    Iterate over strings and count how many times they
+    occurr
+    '''
     r = {}
     for i in yielder:
         if i not in r:
