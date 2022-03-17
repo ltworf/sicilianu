@@ -56,9 +56,7 @@ def word_grouper(yielder) -> dict[str, int]:
 
 def group_sorter(d: dict[str, int]):
     # Put the words and exclude too short and uncommon stuff
-    r = [i for i in d.items() if i[1] >= 4]
-    r.sort(key=lambda i: i[1], reverse=True)
-    return (i[0] for i in r)
+    return (i[0] for i in d.items() if i[1] >= 3)
 
 
 def main():
