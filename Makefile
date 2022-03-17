@@ -8,3 +8,8 @@ scnwiki-latest-pages-articles.xml:
 .PHONY: clean
 clean:
 	$(RM) scnwiki-latest-pages-articles.xml wsicilian
+	$(RM) *.tar.gz
+
+.PHONY: dist
+dist: wsicilian
+	tar -czf wsicilian-`date -Idate`.tar.gz wsicilian
