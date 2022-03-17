@@ -62,8 +62,10 @@ def group_sorter(d: dict[str, int]):
 def main():
     words = word_yielder(sys.argv[1])
     groups = word_grouper(words)
-    for i in group_sorter(groups):
-        print(i)
+    wlist = list(group_sorter(groups))
+    wlist.sort()
+    print('\n'.join(wlist))
+
 
 if __name__ == '__main__':
     main()
