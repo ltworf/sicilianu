@@ -23,15 +23,16 @@ def word_yielder(fname: str):
         for line in f:
             for i in line.split(' '):
                 i = i.strip()
-                
+
                 if len(i) == 0:
                     continue
                 if set(i).difference(LETTERS):
                     continue
                 if i in exclusions:
                     continue
-                
+
                 yield i
+
 
 def word_grouper(yielder) -> dict[str, int]:
     r = {}
@@ -41,11 +42,13 @@ def word_grouper(yielder) -> dict[str, int]:
         r[i] += 1
     return r
 
+
 def group_sorter(d: dict[str, int]):
     # Put the words and exclude too short and uncommon stuff
     r = [i for i in d.items() if i[1] >= 4]
     r.sort(key=lambda i: i[1], reverse=True)
     return (i[0] for i in r)
+
 
 def main():
     words = word_yielder(sys.argv[1])
