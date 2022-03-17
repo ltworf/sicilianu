@@ -3,7 +3,7 @@ import sys
 import os
 
 # Allowed letters in Sicilian
-LETTERS = set('qertuiopasdfghjlzxcvbnmàèìòù')
+LETTERS = set('qertuiopasdfghjlzcvbnmàèìòù')
 
 
 def get_from_dir(dirname: str) -> set[str]:
