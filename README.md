@@ -1,3 +1,8 @@
+The project has migrated
+========================
+
+[The new project page is](https://codeberg.org/parolottero/sicilianu)
+
 Lista di paroli Siciliani - Siclian Wordlist
 ============================================
 
